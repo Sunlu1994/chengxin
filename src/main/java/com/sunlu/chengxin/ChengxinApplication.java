@@ -24,7 +24,7 @@ import org.springframework.context.ApplicationContext;
 public class ChengxinApplication{
     public static ApplicationContext applicationContext;
     public static void main(String[] args) {
-        applicationContext = SpringApplication.run(ChengxinApplication.class, args);
+        applicationContext = SpringApplication.run(ChengxinApplication.class, args);//
     }
 }
 
