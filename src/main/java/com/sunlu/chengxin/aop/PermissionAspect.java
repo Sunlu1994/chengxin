@@ -28,6 +28,8 @@ public class PermissionAspect {
      * 切入点为注解的： @annotation(VisitPermission)
      * 存在 VisitPermission 注解的方法
      */
+//    @Pointcut("execution(public * com.sunlu.chengxin.controller..*(..))")
+
     @Pointcut("@annotation(VisitPermission)")
     private void permission() {
 

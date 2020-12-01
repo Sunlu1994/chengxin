@@ -150,7 +150,7 @@ public class UserController {
      */
     @VisitPermission("permission-test")
     @RequestMapping(value = "/testKafka",method = RequestMethod.GET)
-    public String testKafka(String params) {
+    public String testKafka(String token) {
         return "success";
     }
 }
