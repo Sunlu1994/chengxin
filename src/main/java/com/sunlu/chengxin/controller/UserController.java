@@ -148,6 +148,10 @@ public class UserController {
      * aop的使用测试
      * aop 环绕 发送日志到kafka 存入es
      */
+    @ApiOperation("kafka测试")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token",value = "登录时返回的用户唯一码",defaultValue = "")
+    })
     @VisitPermission("permission-test")
     @RequestMapping(value = "/testKafka",method = RequestMethod.GET)
     public String testKafka(String token) {
