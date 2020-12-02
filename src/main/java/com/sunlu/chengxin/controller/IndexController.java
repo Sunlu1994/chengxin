@@ -58,4 +58,14 @@ public class IndexController {
     public ResultEntity getClassifyList(String token){
         return indexService.getClassifyList(token);
     }
+
+    @ApiOperation(value = "获取商品评价")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token",value = "登录时返回的用户唯一码",defaultValue = ""),
+            @ApiImplicitParam(name = "goodId",value = "商品id",defaultValue = "")
+    })
+    @PostMapping("/getGoodComment")
+    public ResultEntity getGoodComment(String token,Integer goodId){
+        return indexService.getGoodComment(token,goodId);
+    }
 }

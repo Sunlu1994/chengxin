@@ -3,6 +3,7 @@ package com.sunlu.chengxin.service;
 import com.alibaba.fastjson.JSON;
 import com.sunlu.chengxin.common.Utils;
 import com.sunlu.chengxin.dao.ClassifyRepository;
+import com.sunlu.chengxin.dao.CommentRepository;
 import com.sunlu.chengxin.dao.GoodsRepository;
 import com.sunlu.chengxin.dao.ModuleRepository;
 import com.sunlu.chengxin.entity.ClassifyEntity;
@@ -96,6 +97,14 @@ public class IndexServiceImpl implements IndexService{
         return Utils.createJson("200200","获取成功",list);
     }
 
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Override
+    public ResultEntity<List> getGoodComment(String token, Integer goodId) {
+        return Utils.createJson("200200","获取成功",commentRepository.findByGoodIdOrderByAddTime(goodId));
+    }
+
 
     //封装的递归无限分类结果查询 cs所有数据，pid是父级分类id，list是要往哪个list中添加数据
     public static void tree(List<ClassifyEntity> cs , Integer pid , List<Map> list){
@@ -108,7 +117,7 @@ public class IndexServiceImpl implements IndexService{
             }
         }
     }
-    //返回数据的结构
+    //无线分类返回数据的结构
     public static Map<String,Object> treeData(ClassifyEntity cs){
         List<Map<String,Object>> listTemp = new ArrayList<>();
         Map<String,Object> mapTemp = new HashMap<>();

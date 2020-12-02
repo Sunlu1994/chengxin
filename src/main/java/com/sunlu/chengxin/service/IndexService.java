@@ -18,4 +18,7 @@ public interface IndexService {
     //获取类别
     ResultEntity<List> getClassifyList(String token);
 
+    //获取商品评价
+   ResultEntity<List> getGoodComment(String token,Integer goodId);
+
 }
