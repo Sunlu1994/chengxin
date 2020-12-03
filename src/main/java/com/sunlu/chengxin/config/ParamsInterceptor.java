@@ -27,6 +27,8 @@ public class ParamsInterceptor implements HandlerInterceptor {
         //referer:http://localhost:9998/swagger-ui.html
         //referer==null 是指通过postman或者浏览器直接请求的，不是从其他网站跳转的
         //referer==null(如浏览器/postman访问过来 是null)，通过其他地址访问过来时显示来源网址， 下边判断不允许除本网站外调用接口。
+
+        //先注释掉，允许用postman和浏览器测试接口
 //        if (referer==null || referer.equals("") || !referer.startsWith(nowUrl)){
 //            //返回403
 //            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
