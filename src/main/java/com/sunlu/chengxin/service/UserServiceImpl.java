@@ -15,9 +15,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 用户管理相关操作
@@ -46,10 +44,10 @@ public class UserServiceImpl implements UserService{
         }
         List<UserLoginProjection> list = userRepository.findByNickNameAndPasswordAndIsDeleteAndState(nickname,password,1,1);
         if (Utils.isNotEmpty(list)){
-            //登陆成功
+            //登陆成功 更新token
             //生成token方式为：uuid
             userRepository.updateToken(nickname,UUID.randomUUID().toString().replaceAll("-",""));
-            //由于上边更新了token 所以这里重新查询一次再返回
+
             return Utils.createJson("200200","用户名密码正确",userRepository.findByNickNameAndPasswordAndIsDeleteAndState(nickname,password,1,1));
         }else{
             return Utils.createJson("200204","参数错误，用户名密码错误，或用户已删除或用户未启用",list);
@@ -196,8 +194,10 @@ public class UserServiceImpl implements UserService{
         }
         //在项目拦截器中判断了token不能为空 ，并且不能为失效token,所以这里认为token都是有效的
         UserEntity userEntity = userRepository.findByToken(token);
-        addressRepository.save(new AddressEntity(null,address,recevier,receiverPhone,userEntity.getId(),1));
-        return Utils.createJson("200200","成功",new ArrayList<>());
+        AddressEntity addressEntity = addressRepository.save(new AddressEntity(null,address,recevier,receiverPhone,userEntity.getId(),1));
+        Map<String,Integer> map = new HashMap<>();
+        map.put("id",addressEntity.getId());
+        return Utils.createJson("200200","成功",map);
     }
 
     /**
@@ -270,7 +270,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResultEntity logout(String token) {
         //在项目拦截器中判断了token不能为空 ，并且不能为失效token ,所以这里认为token都是有效的
-        UserEntity userEntity = userRepository.findByToken(token);
         userRepository.logout(token);
         //根据用户id查询地址
         return Utils.createJson("200200","成功",new ArrayList());

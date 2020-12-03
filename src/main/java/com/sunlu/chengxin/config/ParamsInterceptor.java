@@ -1,5 +1,6 @@
 package com.sunlu.chengxin.config;
 
+import com.sunlu.chengxin.common.Utils;
 import com.sunlu.chengxin.dao.UserRepository;
 import com.sunlu.chengxin.entity.UserEntity;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -26,18 +27,19 @@ public class ParamsInterceptor implements HandlerInterceptor {
         //referer:http://localhost:9998/swagger-ui.html
         //referer==null 是指通过postman或者浏览器直接请求的，不是从其他网站跳转的
         //referer==null(如浏览器/postman访问过来 是null)，通过其他地址访问过来时显示来源网址， 下边判断不允许除本网站外调用接口。
-        if (referer==null || referer.equals("") || !referer.startsWith(nowUrl)){
-            //返回403
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            System.out.println("非本网站请求地址(比对地址：http://ip+port)---："+"调用的接口域名："+nowUrl+"发起请求来源域名："+referer);
-            return false;
-        }
+//        if (referer==null || referer.equals("") || !referer.startsWith(nowUrl)){
+//            //返回403
+//            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//            System.out.println("非本网站请求地址(比对地址：http://ip+port)---："+"调用的接口域名："+nowUrl+"发起请求来源域名："+referer);
+//            return false;
+//        }
 
         // 过滤
         //如果token上传了，继续到下一个控制器
         Map<String, String[]> requestMap = request.getParameterMap();
         response.setCharacterEncoding("utf-8");
-        if (requestMap.containsKey("token")){
+        System.out.println("tttt-----"+requestMap);
+        if (requestMap.containsKey("token")  && (!Utils.isEmpty(requestMap.get("token")[0]))){
             //token存在于表中 继续到下一个控制器 不存在 返回token无效
             UserEntity userEntity = userRepository.findByToken(requestMap.get("token")[0]);
             if (userEntity == null){
