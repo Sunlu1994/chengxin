@@ -38,7 +38,6 @@ public class ParamsInterceptor implements HandlerInterceptor {
         //如果token上传了，继续到下一个控制器
         Map<String, String[]> requestMap = request.getParameterMap();
         response.setCharacterEncoding("utf-8");
-        System.out.println("tttt-----"+requestMap);
         if (requestMap.containsKey("token")  && (!Utils.isEmpty(requestMap.get("token")[0]))){
             //token存在于表中 继续到下一个控制器 不存在 返回token无效
             UserEntity userEntity = userRepository.findByToken(requestMap.get("token")[0]);
