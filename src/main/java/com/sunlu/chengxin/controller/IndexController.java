@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Api("首页相关接口")
@@ -67,5 +68,12 @@ public class IndexController {
     @PostMapping("/getGoodComment")
     public ResultEntity getGoodComment(String token,Integer goodId){
         return indexService.getGoodComment(token,goodId);
+    }
+
+
+    @PostMapping("/liufei")
+    public String liufei(String t, String token, HttpServletResponse response){
+        System.out.println(t);
+        return "t";
     }
 }

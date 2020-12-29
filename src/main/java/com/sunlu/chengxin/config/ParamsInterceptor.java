@@ -69,5 +69,6 @@ public class ParamsInterceptor implements HandlerInterceptor {
             response.getWriter().println("{\"code\":\"200204\",\"msg\":\"token未上传\",\"data\":[]}");
             return false;
         }
+//        return true;
     }
 }
